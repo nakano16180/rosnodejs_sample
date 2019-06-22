@@ -18,7 +18,7 @@ function talker() {
         // Log through stdout and /rosout
         rosnodejs.log.info('I said: [' + msg.data + ']');
         ++count;
-      }, 100);
+      }, 1000);
     });
 }
 
