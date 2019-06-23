@@ -23,14 +23,14 @@ $ rosrun rosnodejs_sample listener.js
 example2
 ```
 #terminal A
-$ roscore
+$ roslaunch rosnodejs_sample node_sample.launch
 
 #terminal B
-$ rosrun rosnodejs_sample app.js
+$ roslaunch rosnodejs_sample sample_response.launch
 ```
 
 open your web browser and run 
 ```
 #terminal C
-$ rosrun rosnodejs_sample talker.js
+$ rostopic pub /chatter std_msgs/String "data: 'hello1'" -1
 ```

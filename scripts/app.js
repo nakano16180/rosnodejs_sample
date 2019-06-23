@@ -15,6 +15,12 @@ rosnodejs.initNode('/listener_node')
       let sub = rosNode.subscribe('/chatter', std_msgs.String,
         (data) => {
           rosnodejs.log.info('I heard: [' + data.data + ']');
+          io.emit('other-message', data.data);  // 送信
+        }
+      );
+      let sub2 = rosNode.subscribe('/response', std_msgs.String,
+        (data) => {
+          rosnodejs.log.info('I spoke: [' + data.data + ']');
           io.emit('message', data.data);  // 送信
         }
       );
