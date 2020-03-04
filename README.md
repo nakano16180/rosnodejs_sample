@@ -4,7 +4,8 @@
 ```
 $ cd ~/catkin_ws/src
 $ git clone https://github.com/nakano16180/rosnodejs_sample.git
-$ cd ~/catkin_ws && catkin_make
+$ cd rosnodejs_sample
+$ npm install
 ```
 
 ## run

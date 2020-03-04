@@ -1,25 +1,30 @@
 #!/usr/bin/env node
 'use strict';
 
-const rosnodejs = require('rosnodejs');
-const std_msgs = rosnodejs.require('std_msgs').msg;
+const rclnodejs = require('rclnodejs');
 
 function talker() {
-  rosnodejs.initNode('/talker_node')
-    .then((rosNode) => {
-      // Create ROS publisher on the 'chatter' topic with String message
-      let pub = rosNode.advertise('/chatter', std_msgs.String);
-      let count = 0;
-      const msg = new std_msgs.String();
-      // Define a function to execute every 100ms
-      setInterval(() => {
-        msg.data = 'hello world ' + count;
-        pub.publish(msg);
-        // Log through stdout and /rosout
-        rosnodejs.log.info('I said: [' + msg.data + ']');
-        ++count;
-      }, 1000);
-    });
+  rclnodejs.init().then(() => {
+    let std_msgs = rclnodejs.require('std_msgs').msg;
+
+    // Create Node
+    const node = rclnodejs.createNode('talker');
+    // Create ROS publisher on the 'chatter' topic with String message
+    const publisher = node.createPublisher(std_msgs.String, '/chatter');
+    let msg = new std_msgs.String();
+
+    let count = 0;
+    // Define a function to execute every 100ms
+    setInterval(() => {
+      msg.data = 'hello world ' + count;
+      publisher.publish(msg);
+
+      // Log through stdout and /rosout
+      console.log('I said: [' + msg.data + ']');
+      ++count;
+    }, 1000);
+    rclnodejs.spin(node);
+  });
 }
 
 if (require.main === module) {
